@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="hi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>रॉयल जैकपॉट कैसीनो (Royal Jackpot Casino)</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            background: radial-gradient(circle, #1a0826 0%, #08010f 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: #fff;
+            padding: 15px;
+        }
+
+        .casino-container {
+            background: linear-gradient(145deg, #2b1040, #160424);
+            border: 3px solid #ffd700;
+            border-radius: 20px;
+            box-shadow: 0 0 30px rgba(255, 215, 0, 0.3), inset 0 0 15px rgba(255, 215, 0, 0.2);
+            width: 100%;
+            max-width: 480px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        /* टॉप हेडर और जैकपॉट */
+        .header {
+            margin-bottom: 15px;
+        }
+
+        .jackpot-box {
+            background: linear-gradient(90deg, #b8860b, #ffd700, #b8860b);
+            color: #000;
+            padding: 8px;
+            border-radius: 12px;
+            font-weight: bold;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            box-shadow: 0 0 15px #ffd700;
+            margin-bottom: 12px;
+            animation: pulse 1.5s infinite;
+        }
+
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+
+        /* स्टेटस बार (कॉइन्स & लेवल) */
+        .stats-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: rgba(0, 0, 0, 0.5);
+            padding: 10px 15px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 215, 0, 0.3);
+            margin-bottom: 10px;
+        }
+
+        .stat-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .coin-val { color: #ffd700; }
+        .lvl-val { color: #00ffcc; }
+
+        /* लेवल प्रोग्रेस बार */
+        .progress-container {
+            background: #222;
+            border-radius: 6px;
+            height: 8px;
+            width: 100%;
+            margin-bottom: 15px;
+            overflow: hidden;
+            border: 1px solid #444;
+        }
+
+        .progress-bar {
+            background: linear-gradient(90deg, #00ffcc, #00bfff);
+            height: 100%;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        /* स्लॉट मशीन रील्स */
+        .slots-frame {
+            background: #000;
+            border: 4px solid #b8860b;
+            border-radius: 15px;
+            padding: 15px 10px;
+            display: flex;
+            justify-content: space-around;
+            gap: 10px;
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.8);
+            margin-bottom: 15px;
+        }
+
+        .reel {
+            background: #fff;
+            border-radius: 10px;
+            width: 90px;
+            height: 100px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            transition: transform 0.1s ease;
+            overflow: hidden;
+        }
+
+        .reel.spinning {
+            animation: blurSpin 0.15s infinite;
+        }
+
+        @keyframes blurSpin {
+            0% { transform: translateY(-5px); opacity: 0.8; }
+            50% { transform: translateY(5px); opacity: 0.5; }
+            100% { transform: translateY(-5px); opacity: 0.8; }
+        }
+
+        /* मैसेज बॉक्स */
+        .message-box {
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-height: 35px;
+            color: #ffd700;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 15px;
+            text-shadow: 0 0 5px rgba(255, 215, 0, 0.5);
+        }
+
+        /* बेट कंट्रोल्स */
+        .bet-controls {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 15px;
+        }
+
+        .btn-bet {
+            background: #331552;
+            color: #ffd700;
+            border: 1px solid #ffd700;
+            padding: 8px 14px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+            font-size: 1rem;
+            transition: all 0.2s;
+        }
+
+        .btn-bet:hover {
+            background: #ffd700;
+            color: #000;
+        }
+
+        .bet-display {
+            font-size: 1.1rem;
+            font-weight: bold;
+            min-width: 90px;
+        }
+
+        /* स्पिन और एक्शन बटन */
+        .spin-btn {
+            background: linear-gradient(180deg, #ff3366, #b3002d);
+            border: none;
+            border-bottom: 4px solid #73001d;
+            border-radius: 30px;
+            color: #fff;
+            width: 100%;
+            padding: 14px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            letter-spacing: 2px;
+            cursor: pointer;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.4);
+            box-shadow: 0 0 15px rgba(255, 51, 102, 0.4);
+            transition: all 0.1s;
+        }
+
+        .spin-btn:active {
+            transform: translateY(3px);
+            border-bottom-width: 1px;
+        }
+
+        .spin-btn:disabled {
+            background: #555;
+            border-color: #333;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* फ्री कॉइन बटन */
+        .free-coin-btn {
+            margin-top: 15px;
+            background: transparent;
+            border: 1px dashed #00ffcc;
+            color: #00ffcc;
+            padding: 6px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .free-coin-btn:hover {
+            background: rgba(0, 255, 204, 0.1);
+        }
+    </style>
+</head>
+<body>
+
+<div class="casino-container">
+    <div class="header">
+        <div class="jackpot-box">
+            🎰 MEGA JACKPOT: <span id="jackpot">10,000</span> 🪙
+        </div>
+        <div class="stats-bar">
+            <div class="stat-item">🪙 <span class="coin-val" id="coins">1,000</span></div>
+            <div class="stat-item">⭐ Level: <span class="lvl-val" id="level">1</span></div>
+        </div>
+        <div class="progress-container">
+            <div class="progress-bar" id="xp-bar"></div>
+        </div>
+    </div>
+
+    <!-- स्लॉट मशीन रील्स -->
+    <div class="slots-frame">
+        <div class="reel" id="reel1">7️⃣</div>
+        <div class="reel" id="reel2">💎</div>
+        <div class="reel" id="reel3">🔔</div>
+    </div>
+
+    <!-- मैसेज बॉक्स -->
+    <div class="message-box" id="msg">स्पिन बटन दबाकर खेल शुरू करें!</div>
+
+    <!-- बेट कंट्रोल्स -->
+    <div class="bet-controls">
+        <button class="btn-bet" onclick="changeBet(-10)">-10</button>
+        <div class="bet-display">दांव: <span id="bet">10</span></div>
+        <button class="btn-bet" onclick="changeBet(10)">+10</button>
+        <button class="btn-bet" onclick="maxBet()">MAX</button>
+    </div>
+
+    <!-- मुख्य स्पिन बटन -->
+    <button class="spin-btn" id="spinBtn" onclick="spin()">SPIN!</button>
+
+    <!-- अगर कॉइन खत्म हो जाए -->
+    <button class="free-coin-btn" onclick="getFreeCoins()">+500 फ्री कॉइन्स क्लेम करें</button>
+</div>
+
+<script>
+    // गेम की सेटिंग्स और स्टेट्स
+    const symbols = ['🍒', '🍋', '🍇', '🔔', '💎', '7️⃣'];
+    
+    let coins = 1000;
+    let bet = 10;
+    let level = 1;
+    let currentXP = 0;
+    let xpNeeded = 100;
+    let jackpot = 10000;
+    let isSpinning = false;
+
+    // DOM एलिमेंट्स
+    const coinsEl = document.getElementById('coins');
+    const levelEl = document.getElementById('level');
+    const xpBarEl = document.getElementById('xp-bar');
+    const jackpotEl = document.getElementById('jackpot');
+    const betEl = document.getElementById('bet');
+    const msgEl = document.getElementById('msg');
+    const spinBtn = document.getElementById('spinBtn');
+    const reels = [
+        document.getElementById('reel1'),
+        document.getElementById('reel2'),
+        document.getElementById('reel3')
+    ];
+
+    // बेट बदलना
+    function changeBet(amount) {
+        if (isSpinning) return;
+        if (bet + amount >= 10 && bet + amount <= coins) {
+            bet += amount;
+            betEl.innerText = bet;
+        }
+    }
+
+    function maxBet() {
+        if (isSpinning) return;
+        bet = Math.min(coins, 100);
+        if (bet < 10) bet = 10;
+        betEl.innerText = bet;
+    }
+
+    // स्पिन फंक्शन
+    function spin() {
+        if (isSpinning) return;
+        
+        if (coins < bet) {
+            msgEl.innerText = "❌ कॉइन कम हैं! नीचे से फ्री कॉइन्स लें।";
+            return;
+        }
+
+        // कॉइन्स घटाएं और जैकपॉट थोड़ा बढ़ाएं
+        coins -= bet;
+        jackpot += Math.floor(bet * 0.2); // हर बेट का 20% जैकपॉट में जुड़ता है
+        updateUI();
+
+        isSpinning = true;
+        spinBtn.disabled = true;
+        msgEl.innerText = "घूम रहा है... 🍀";
+
+        // रील्स एनीमेशन चालू करें
+        reels.forEach(reel => reel.classList.add('spinning'));
+
+        // रील्स को बारी-बारी से रोकना
+        let finalResults = [];
+        let stopTime = 800; // पहला रील 800ms बाद रुकेगा
+
+        reels.forEach((reel, index) => {
+            setTimeout(() => {
+                const randomSymbol = symbols[Math.floor(Math.random() * symbols.length)];
+                finalResults[index] = randomSymbol;
+                reel.innerText = randomSymbol;
+                reel.classList.remove('spinning');
+
+                // जब आखरी रील भी रुक जाए
+                if (index === reels.length - 1) {
+                    checkWin(finalResults);
+                    isSpinning = false;
+                    spinBtn.disabled = false;
+                }
+            }, stopTime + (index * 400));
+        });
+    }
+
+    // परिणाम चेक करना
+    function checkWin(res) {
+        let winAmount = 0;
+        let isJackpot = false;
+
+        // 3 एक जैसे सिंबल
+        if (res[0] === res[1] && res[1] === res[2]) {
+            if (res[0] === '7️⃣') {
+                // जैकपॉट जीत गए!
+                winAmount = jackpot;
+                jackpot = 5000; // रीसेट
+                isJackpot = true;
+            } else if (res[0] === '💎') {
+                winAmount = bet * 30;
+            } else if (res[0] === '🔔') {
+                winAmount = bet * 20;
+            } else if (res[0] === '🍇') {
+                winAmount = bet * 10;
+            } else {
+                winAmount = bet * 5;
+            }
+        } 
+        // कोई भी 2 सिंबल मैच होना
+        else if (res[0] === res[1] || res[1] === res[2] || res[0] === res[2]) {
+            winAmount = Math.floor(bet * 1.5);
+        }
+
+        // जीत का हिसाब और XP जोड़ना
+        if (isJackpot) {
+            msgEl.innerHTML = `🚨 <b>महा जैकपॉट!! आप जीते ${winAmount} कॉइन्स!</b> 🚨`;
+            coins += winAmount;
+            addXP(100);
+        } else if (winAmount > 0) {
+            msgEl.innerText = `🎉 बधाई हो! आप जीते +${winAmount} कॉइन्स!`;
+            coins += winAmount;
+            addXP(30);
+        } else {
+            msgEl.innerText = "दुबारा कोशिश करें! अगली बार किस्मत साथ देगी।";
+            addXP(10); // हारने पर भी थोड़ा XP
+        }
+
+        updateUI();
+    }
+
+    // लेवल और XP सिस्टम
+    function addXP(amount) {
+        currentXP += amount;
+        if (currentXP >= xpNeeded) {
+            currentXP -= xpNeeded;
+            level++;
+            xpNeeded = Math.floor(xpNeeded * 1.3);
+            let reward = level * 200;
+            coins += reward;
+            alert(`🎉 LEVEL UP! आप लेवल ${level} पर पहुँच गए!\n🎁 बोनस: +${reward} कॉइन्स मिले!`);
+        }
+        updateXPBar();
+    }
+
+    function updateXPBar() {
+        const percentage = Math.min((currentXP / xpNeeded) * 100, 100);
+        xpBarEl.style.width = percentage + "%";
+    }
+
+    // फ्री कॉइन्स क्लेम करना
+    function getFreeCoins() {
+        if (coins >= 500) {
+            alert("आपके पास पहले से पर्याप्त कॉइन्स हैं!");
+            return;
+        }
+        coins += 500;
+        updateUI();
+        msgEl.innerText = "🎁 +500 फ्री कॉइन्स जोड़े गए!";
+    }
+
+    // स्क्रीन अपडेट
+    function updateUI() {
+        coinsEl.innerText = coins.toLocaleString();
+        levelEl.innerText = level;
+        jackpotEl.innerText = jackpot.toLocaleString();
+    }
+
+    // शुरुआत में XP सेट करना
+    updateXPBar();
+</script>
+
+</body>
+</html>
